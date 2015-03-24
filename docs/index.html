@@ -120,13 +120,13 @@
               <span class="icon icon-zoom-out"></span>
             </span>
           </button>
-          <button class="btn btn-primary" data-method="rotate" data-option="-90" type="button" title="Rotate Left">
-            <span class="docs-tooltip" data-toggle="tooltip" title="$().cropper(&quot;rotate&quot;, -90)">
+          <button class="btn btn-primary" data-method="rotate" data-option="-45" type="button" title="Rotate Left">
+            <span class="docs-tooltip" data-toggle="tooltip" title="$().cropper(&quot;rotate&quot;, -45)">
               <span class="icon icon-rotate-left"></span>
             </span>
           </button>
-          <button class="btn btn-primary" data-method="rotate" data-option="90" type="button" title="Rotate Right">
-            <span class="docs-tooltip" data-toggle="tooltip" title="$().cropper(&quot;rotate&quot;, 90)">
+          <button class="btn btn-primary" data-method="rotate" data-option="45" type="button" title="Rotate Right">
+            <span class="docs-tooltip" data-toggle="tooltip" title="$().cropper(&quot;rotate&quot;, 45)">
               <span class="icon icon-rotate-right"></span>
             </span>
           </button>
@@ -185,12 +185,12 @@
         </div>
 
         <!-- Show the cropped image in modal -->
-        <div class="modal fade docs-cropped" id="getDataURLModal" aria-hidden="true" aria-labelledby="getDataURLTitle" role="dialog" tabindex="-1">
+        <div class="modal fade docs-cropped" id="getCroppedCanvasModal" aria-hidden="true" aria-labelledby="getCroppedCanvasTitle" role="dialog" tabindex="-1">
           <div class="modal-dialog">
             <div class="modal-content">
               <div class="modal-header">
                 <button class="close" data-dismiss="modal" type="button" aria-hidden="true">&times;</button>
-                <h4 class="modal-title" id="getDataURLTitle">Cropped</h4>
+                <h4 class="modal-title" id="getCroppedCanvasTitle">Cropped</h4>
               </div>
               <div class="modal-body"></div>
               <!-- <div class="modal-footer">
@@ -457,7 +457,7 @@
 &lt;/div&gt;</pre>
         <h5>JavaScript:</h5>
         <pre class="prettyprint">$('.cropper-example-1 &gt; img').cropper({
-  aspectRatio: 3 / 2,
+  aspectRatio: 16 / 9,
   autoCropArea: 0.65,
   strict: false,
   guides: false,

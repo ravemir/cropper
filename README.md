@@ -532,7 +532,7 @@ Output the crop box position and size.
 Change the crop box position and size.
 
 
-### getCroppedCanvas([options[, type[, quality]]])
+### getCroppedCanvas([options])
 
 - **options** (optional):
   - Type: `Object`
@@ -690,3 +690,4 @@ Released under the [MIT](http://opensource.org/licenses/mit-license.html) licens
 ## Related projects
 
 - [ngCropper](https://github.com/koorgoo/ngCropper) - AngularJS wrapper for Cropper.
+- [ember-cli-cropper](https://github.com/anilmaurya/ember-cli-cropper) - Ember cli addon for Cropper.
