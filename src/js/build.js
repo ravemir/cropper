@@ -32,7 +32,7 @@
     this.initPreview();
 
     // Format aspect ratio
-    options.aspectRatio = num(options.aspectRatio) || NaN; // 0 -> NaN, 'auto' -> NaN
+    options.aspectRatio = num(options.aspectRatio) || NaN; // 0 -> NaN
 
     if (options.autoCrop) {
       this.cropped = true;
@@ -77,9 +77,12 @@
     }
 
     this.built = false;
+    this.container = null;
+    this.canvas = null;
+    this.cropBox = null; // This is necessary when replace
     this.removeListeners();
 
-    this.$preview.empty();
+    this.resetPreview();
     this.$preview = null;
 
     this.$viewBox = null;

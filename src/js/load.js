@@ -2,11 +2,16 @@
     var options = this.options,
         $this = this.$element,
         crossOrigin,
+        bustCacheUrl,
         buildEvent,
         $clone;
 
     if (!url) {
       if ($this.is('img')) {
+        if (!$this.attr('src')) {
+          return;
+        }
+
         url = $this.prop('src');
       } else if ($this.is('canvas') && SUPPORT_CANVAS) {
         url = $this[0].toDataURL();
@@ -25,10 +30,10 @@
     }
 
     if (options.checkImageOrigin && isCrossOriginURL(url)) {
-      crossOrigin = ' crossOrigin'; // crossOrigin="anonymous"
+      crossOrigin = 'anonymous';
 
       if (!$this.prop('crossOrigin')) { // Only when there was not a "crossOrigin" property
-        url = addTimestamp(url); // Bust cache (#148)
+        bustCacheUrl = addTimestamp(url); // Bust cache (#148)
       }
     }
 
@@ -48,8 +53,10 @@
       this.url = url;
       this.ready = true;
       this.build();
-    }, this)).attr({
-      src: url,
+    }, this)).one('error', function () {
+      $clone.remove();
+    }).attr({
+      src: bustCacheUrl || url,
       crossOrigin: crossOrigin
     });
 

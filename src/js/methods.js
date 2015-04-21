@@ -1,6 +1,6 @@
   $.extend(prototype, {
     reset: function () {
-      if (this.disabled) {
+      if (!this.built || this.disabled) {
         return;
       }
 
@@ -26,8 +26,12 @@
         height: 0
       });
 
-      this.renderCropBox();
       this.cropped = false;
+      this.renderCropBox();
+
+      this.limitCanvas();
+      this.renderCanvas(); // Render canvas after render crop box
+
       this.$dragBox.removeClass(CLASS_MODAL);
       this.$cropBox.addClass(CLASS_HIDDEN);
     },
@@ -35,16 +39,18 @@
     destroy: function () {
       var $this = this.$element;
 
-      if (!this.ready) {
-        this.$clone.off('load').remove();
+      if (this.ready) {
+        this.unbuild();
+        $this.removeClass(CLASS_HIDDEN);
+      } else {
+        this.$clone.remove();
       }
 
-      this.unbuild();
-      $this.removeClass(CLASS_HIDDEN).removeData('cropper');
+      $this.removeData('cropper');
     },
 
     replace: function (url) {
-      if (this.ready && !this.disabled && url) {
+      if (!this.disabled && url) {
         this.load(url);
       }
     },
@@ -117,7 +123,6 @@
       var cropBox = this.cropBox,
           canvas = this.canvas,
           image = this.image,
-          rotate = image.rotate,
           ratio,
           data;
 
@@ -145,7 +150,7 @@
         };
       }
 
-      data.rotate = rotate;
+      data.rotate = image.rotate;
 
       return data;
     },
@@ -369,6 +374,10 @@
 
         if (this.built) {
           this.initCropBox();
+
+          if (this.cropped) {
+            this.renderCropBox();
+          }
         }
       }
     },

@@ -26,8 +26,8 @@
 dist/
 ├── cropper.css     ( 5 KB)
 ├── cropper.min.css ( 4 KB)
-├── cropper.js      (50 KB)
-└── cropper.min.js  (19 KB)
+├── cropper.js      (54 KB)
+└── cropper.min.js  (21 KB)
 ```
 
 
@@ -55,6 +55,9 @@ Include files:
 <script src="/path/to/cropper.js"></script>
 ```
 
+#### CDN
+
+The [cdnjs.com](https://cdnjs.com/) provides CDN support for Cropper's CSS and JavaScript. You can find the links [here](https://cdnjs.com/libraries/cropper).
 
 
 ### Usage
@@ -263,7 +266,7 @@ Enable to rotate the image.
 ### minContainerWidth
 
 - Type: `Number`
-- Default: `300`
+- Default: `200`
 
 The minimum width of the container.
 
@@ -271,9 +274,25 @@ The minimum width of the container.
 ### minContainerHeight
 
 - Type: `Number`
-- Default: `150`
+- Default: `100`
 
 The minimum height of the container.
+
+
+### minCanvasWidth
+
+- Type: `Number`
+- Default: `0`
+
+The minimum width of the canvas (image wrapper).
+
+
+### minCanvasHeight
+
+- Type: `Number`
+- Default: `0`
+
+The minimum height of the canvas (image wrapper).
 
 
 ### minCropBoxWidth
@@ -351,12 +370,15 @@ A shortcut of the "zoomout.cropper" event.
 
 ## Methods
 
-General usage:
+As there is a asynchronous process when load the iamge, you should call most of the methods after built, except "setAspectRatio", "replace" and "destroy".
 
 ```js
-$().cropper('method', argument1, , argument2, ..., argumentN)
+$().cropper({
+  built: function () {
+    $().cropper('method', argument1, , argument2, ..., argumentN)
+  }
+}
 ```
-
 
 ### move(offsetX, offsetY)
 
