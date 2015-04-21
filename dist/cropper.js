@@ -5,7 +5,7 @@
  * Copyright (c) 2014-2015 Fengyuan Chen and contributors
  * Released under the MIT license
  *
- * Date: 2015-03-21T04:58:27.265Z
+ * Date: 2015-03-24T19:13:12.986Z
  */
 
 (function (factory) {
@@ -1045,14 +1045,19 @@
         }
 
         delta = delta <= -1 ? 1 / (1 - delta) : delta <= 1 ? (1 + delta) : delta;
-        width = canvas.width * delta;
-        height = canvas.height * delta;
-        canvas.left -= (width - canvas.width) / 2;
-        canvas.top -= (height - canvas.height) / 2;
-        canvas.width = width;
-        canvas.height = height;
-        this.renderCanvas(true);
-        this.setDragMode('move');
+
+        // Fix to stop infinite zoom out (only allow zoom out up to the level of the 'maxZoomLevel' option)
+        if (canvas.width * delta > this.options.maxZoomLevel * canvas.naturalWidth ||
+            canvas.height * delta > this.options.maxZoomLevel * canvas.naturalHeight) {
+          width = canvas.width * delta;
+          height = canvas.height * delta;
+          canvas.left -= (width - canvas.width) / 2;
+          canvas.top -= (height - canvas.height) / 2;
+          canvas.width = width;
+          canvas.height = height;
+          this.renderCanvas(true);
+          this.setDragMode('move');
+        }
       }
     },
 
@@ -1786,6 +1791,9 @@
     minCropBoxHeight: 0,
     minContainerWidth: 200,
     minContainerHeight: 100,
+
+    // Added options
+    maxZoomLevel: 1,
 
     // Events
     build: null, // Function
