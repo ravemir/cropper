@@ -4,3 +4,5 @@ node_modules
 bower_components
 *.map
 _*
+dist/cropper.css
+dist/cropper.js
