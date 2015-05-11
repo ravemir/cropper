@@ -68,6 +68,7 @@
 
     this.built = true;
     this.render();
+    this.setData(options.data);
     $this.one(EVENT_BUILT, options.built).trigger(EVENT_BUILT); // Only trigger once
   };
 
@@ -77,6 +78,9 @@
     }
 
     this.built = false;
+    this.initialImage = null;
+    this.initialCanvas = null; // This is necessary when replace
+    this.initialCropBox = null;
     this.container = null;
     this.canvas = null;
     this.cropBox = null; // This is necessary when replace

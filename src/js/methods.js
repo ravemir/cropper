@@ -1,4 +1,23 @@
   $.extend(prototype, {
+    crop: function () {
+      if (!this.built || this.disabled) {
+        return;
+      }
+
+      if (!this.cropped) {
+        this.cropped = true;
+        this.limitCropBox(true, true);
+
+        if (this.options.modal) {
+          this.$dragBox.addClass(CLASS_MODAL);
+        }
+
+        this.$cropBox.removeClass(CLASS_HIDDEN);
+      }
+
+      this.setCropBoxData(this.initialCropBox);
+    },
+
     reset: function () {
       if (!this.built || this.disabled) {
         return;
@@ -6,10 +25,11 @@
 
       this.image = $.extend({}, this.initialImage);
       this.canvas = $.extend({}, this.initialCanvas);
+      this.cropBox = $.extend({}, this.initialCropBox); // required for strict mode
+
       this.renderCanvas();
 
       if (this.cropped) {
-        this.cropBox = $.extend({}, this.initialCropBox);
         this.renderCropBox();
       }
     },
@@ -42,7 +62,7 @@
       if (this.ready) {
         this.unbuild();
         $this.removeClass(CLASS_HIDDEN);
-      } else {
+      } else if (this.$clone) {
         this.$clone.remove();
       }
 
@@ -51,6 +71,7 @@
 
     replace: function (url) {
       if (!this.disabled && url) {
+        this.options.data = null; // Remove previous data
         this.load(url);
       }
     },
@@ -150,9 +171,44 @@
         };
       }
 
-      data.rotate = image.rotate;
+      data.rotate = this.ready ? image.rotate : 0;
 
       return data;
+    },
+
+    setData: function (data) {
+      var image = this.image,
+          canvas = this.canvas,
+          cropBoxData = {},
+          ratio;
+
+      if (this.built && !this.disabled && $.isPlainObject(data)) {
+        if (isNumber(data.rotate) && data.rotate !== image.rotate && this.options.rotatable) {
+          image.rotate = data.rotate;
+          this.rotated = true;
+          this.renderCanvas(true);
+        }
+
+        ratio = image.width / image.naturalWidth;
+
+        if (isNumber(data.x)) {
+          cropBoxData.left = data.x * ratio + canvas.left;
+        }
+
+        if (isNumber(data.y)) {
+          cropBoxData.top = data.y * ratio + canvas.top;
+        }
+
+        if (isNumber(data.width)) {
+          cropBoxData.width = data.width * ratio;
+        }
+
+        if (isNumber(data.height)) {
+          cropBoxData.height = data.height * ratio;
+        }
+
+        this.setCropBoxData(cropBoxData);
+      }
     },
 
     getContainerData: function () {
@@ -234,21 +290,19 @@
           cropBox.top = data.top;
         }
 
+        if (isNumber(data.width)) {
+          cropBox.width = data.width;
+        }
+
+        if (isNumber(data.height)) {
+          cropBox.height = data.height;
+        }
+
         if (aspectRatio) {
           if (isNumber(data.width)) {
-            cropBox.width = data.width;
             cropBox.height = cropBox.width / aspectRatio;
           } else if (isNumber(data.height)) {
-            cropBox.height = data.height;
             cropBox.width = cropBox.height * aspectRatio;
-          }
-        } else {
-          if (isNumber(data.width)) {
-            cropBox.width = data.width;
-          }
-
-          if (isNumber(data.height)) {
-            cropBox.height = data.height;
           }
         }
 

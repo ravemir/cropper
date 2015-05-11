@@ -30,6 +30,12 @@ $(function () {
         $dataWidth = $('#dataWidth'),
         $dataRotate = $('#dataRotate'),
         options = {
+          // data: {
+          //   x: 420,
+          //   y: 60,
+          //   width: 640,
+          //   height: 360
+          // },
           // strict: false,
           // responsive: false,
           // checkImageOrigin: false
@@ -180,7 +186,7 @@ $(function () {
             blobURL = URL.createObjectURL(file);
             $image.one('built.cropper', function () {
               URL.revokeObjectURL(blobURL); // Revoke when load complete
-            }).cropper('reset', true).cropper('replace', blobURL);
+            }).cropper('reset').cropper('replace', blobURL);
             $inputImage.val('');
           } else {
             showMessage('Please choose an image file.');

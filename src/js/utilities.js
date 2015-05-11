@@ -1,5 +1,5 @@
   function isNumber(n) {
-    return typeof n === 'number';
+    return typeof n === 'number' && !isNaN(n);
   }
 
   function isUndefined(n) {
@@ -35,10 +35,6 @@
     var timestamp = 'timestamp=' + (new Date()).getTime();
 
     return (url + (url.indexOf('?') === -1 ? '?' : '&') + timestamp);
-  }
-
-  function inRange(source, target) {
-    return target.left < 0 && source.width < (target.left + target.width) && target.top < 0 && source.height < (target.top + target.height);
   }
 
   function getRotateValue(degree) {

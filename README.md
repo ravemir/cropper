@@ -26,7 +26,7 @@
 dist/
 ├── cropper.css     ( 5 KB)
 ├── cropper.min.css ( 4 KB)
-├── cropper.js      (54 KB)
+├── cropper.js      (56 KB)
 └── cropper.min.js  (21 KB)
 ```
 
@@ -107,6 +107,14 @@ If you want to change the global default options, You may use `$.fn.cropper.setD
 - Default: `NaN`
 
 Set the aspect ratio of the crop box. By default, the crop box is free ratio.
+
+
+### data
+
+- Type: `Object`
+- Default: `null`
+
+The previous cropped data if you had stored, will be passed to `setData` method automatically.
 
 
 ### crop
@@ -375,9 +383,9 @@ As there is a asynchronous process when load the iamge, you should call most of 
 ```js
 $().cropper({
   built: function () {
-    $().cropper('method', argument1, , argument2, ..., argumentN)
+    $().cropper('method', argument1, , argument2, ..., argumentN);
   }
-}
+});
 ```
 
 ### move(offsetX, offsetY)
@@ -473,9 +481,23 @@ Destroy the cropper and remove the instance from the image.
     - `height`: the height of the cropped area
     - `rotate`: the rotated degrees of the image
 
-Get the cropped area data in the original image for cropping image.
+Get the cropped area data (base on the original image).
 
 ![a schematic diagram of data's properties](assets/img/data.png)
+
+
+### setData(data)
+
+- **data**:
+  - Type: `Object`
+  - Properties:
+    - `x`: the offset left of the cropped area
+    - `y`: the offset top of the cropped area
+    - `width`: the width of the cropped area
+    - `height`: the height of the cropped area
+    - `rotate`: the rotated degrees of the image
+
+Set the cropped area data (base on the original image).
 
 
 ### getContainerData()
@@ -711,5 +733,7 @@ Released under the [MIT](http://opensource.org/licenses/mit-license.html) licens
 
 ## Related projects
 
+- [react-cropper](https://github.com/roadmanfong/react-cropper) - Cropper as React components.
 - [ngCropper](https://github.com/koorgoo/ngCropper) - AngularJS wrapper for Cropper.
 - [ember-cli-cropper](https://github.com/anilmaurya/ember-cli-cropper) - Ember cli addon for Cropper.
+- [ember-cli-image-cropper](https://github.com/mhretab/ember-cli-image-cropper) - Ember-cli addon for cropping/resizing images based on the jQuery Cropper plugin.

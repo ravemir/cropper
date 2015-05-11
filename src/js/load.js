@@ -56,8 +56,8 @@
     }, this)).one('error', function () {
       $clone.remove();
     }).attr({
-      src: bustCacheUrl || url,
-      crossOrigin: crossOrigin
+      crossOrigin: crossOrigin, // "crossOrigin" must before "src" (#271)
+      src: bustCacheUrl || url
     });
 
     // Hide and insert into the document

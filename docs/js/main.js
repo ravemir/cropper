@@ -150,7 +150,7 @@ $(function () {
             blobURL = URL.createObjectURL(file);
             $image.one('built.cropper', function () {
               URL.revokeObjectURL(blobURL); // Revoke when load complete
-            }).cropper('reset', true).cropper('replace', blobURL);
+            }).cropper('reset').cropper('replace', blobURL);
             $inputImage.val('');
           } else {
             showMessage('Please choose an image file.');
@@ -198,20 +198,21 @@ $(function () {
   // Example 2
   (function () {
     var $image = $('#cropper-example-2 > img'),
-        canvasData,
-        cropBoxData;
+        cropBoxData,
+        canvasData;
 
     $('#cropper-example-2-modal').on('shown.bs.modal', function () {
       $image.cropper({
         autoCropArea: 0.5,
         built: function () {
-          $image.cropper('setCanvasData', canvasData);
+          // Strict mode: set crop box data first
           $image.cropper('setCropBoxData', cropBoxData);
+          $image.cropper('setCanvasData', canvasData);
         }
       });
     }).on('hidden.bs.modal', function () {
-      canvasData = $image.cropper('getCanvasData');
       cropBoxData = $image.cropper('getCropBoxData');
+      canvasData = $image.cropper('getCanvasData');
       $image.cropper('destroy');
     });
 

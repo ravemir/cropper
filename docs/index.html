@@ -8,7 +8,7 @@
   <meta name="keywords" content="HTML, CSS, JS, JavaScript, jQuery plugin, image cropping, front-end, frontend, web development">
   <meta name="author" content="Fengyuan Chen">
   <title>Cropper</title>
-  <link href="apple-touch-icon-precomposed.png" rel="apple-touch-icon-precomposed">
+  <link href="apple-touch-icon.png" rel="apple-touch-icon">
   <link href="favicon.ico" rel="shortcut icon">
   <link href="favicon.ico" rel="icon">
   <link href="//maxcdn.bootstrapcdn.com/bootstrap/3.3.4/css/bootstrap.min.css" rel="stylesheet">
@@ -36,7 +36,6 @@
         <a class="navbar-brand" href="javascript:void(0);">Cropper</a>
       </div>
       <nav class="collapse navbar-collapse" id="navbar-collapse-1" role="navigation">
-        <p class="navbar-text">A simple jQuery image cropping plugin.</p>
         <ul class="nav navbar-nav navbar-right">
           <li><a href="#examples">Examples</a></li>
           <li><a href="//github.com/fengyuanchen/cropper/blob/master/README.md">Docs</a></li>
@@ -47,6 +46,19 @@
       </nav>
     </div>
   </header>
+
+  <!-- Jumbotron -->
+  <div class="jumbotron docs-jumbotron">
+    <div class="container">
+      <h1>Cropper <small class="version">v0.9.3</small></h1>
+      <p class="lead">A simple jQuery image cropping plugin.</p>
+      <div class="docs-carbonads-container">
+        <div class="docs-carbonads">
+          <script async type="text/javascript" src="//cdn.carbonads.com/carbon.js?zoneid=1673&serve=C6AILKT&placement=fengyuanchen" id="_carbonads_js"></script>
+        </div>
+      </div>
+    </div>
+  </div>
 
   <!-- Content -->
   <div class="container">
@@ -133,6 +145,16 @@
         </div>
 
         <div class="btn-group">
+          <button class="btn btn-primary" data-method="crop" type="button" title="Crop">
+            <span class="docs-tooltip" data-toggle="tooltip" title="$().cropper(&quot;crop&quot;)">
+              <span class="icon icon-ok"></span>
+            </span>
+          </button>
+          <button class="btn btn-primary" data-method="clear" type="button" title="Clear">
+            <span class="docs-tooltip" data-toggle="tooltip" title="$().cropper(&quot;clear&quot;)">
+              <span class="icon icon-remove"></span>
+            </span>
+          </button>
           <button class="btn btn-primary" data-method="disable" type="button" title="Disable">
             <span class="docs-tooltip" data-toggle="tooltip" title="$().cropper(&quot;disable&quot;)">
               <span class="icon icon-lock"></span>
@@ -141,11 +163,6 @@
           <button class="btn btn-primary" data-method="enable" type="button" title="Enable">
             <span class="docs-tooltip" data-toggle="tooltip" title="$().cropper(&quot;enable&quot;)">
               <span class="icon icon-unlock"></span>
-            </span>
-          </button>
-          <button class="btn btn-primary" data-method="clear" type="button" title="Clear">
-            <span class="docs-tooltip" data-toggle="tooltip" title="$().cropper(&quot;clear&quot;)">
-              <span class="icon icon-remove"></span>
             </span>
           </button>
           <button class="btn btn-primary" data-method="reset" type="button" title="Reset">
@@ -173,13 +190,13 @@
             </span>
           </button>
           <button class="btn btn-primary" data-method="getCroppedCanvas" data-option="{ &quot;width&quot;: 160, &quot;height&quot;: 90 }" type="button">
-            <span class="docs-tooltip" data-toggle="tooltip" title="$().cropper(&quot;getCroppedCanvas&quot;, { &quot;width&quot;: 160, &quot;height&quot;: 90 })">
-              160 &times; 90
+            <span class="docs-tooltip" data-toggle="tooltip" title="$().cropper(&quot;getCroppedCanvas&quot;, { width: 160, height: 90 })">
+              160&times;90
             </span>
           </button>
           <button class="btn btn-primary" data-method="getCroppedCanvas" data-option="{ &quot;width&quot;: 320, &quot;height&quot;: 180 }" type="button">
-            <span class="docs-tooltip" data-toggle="tooltip" title="$().cropper(&quot;getCroppedCanvas&quot;, { &quot;width&quot;: 320, &quot;height&quot;: 180 })">
-              320 &times; 180
+            <span class="docs-tooltip" data-toggle="tooltip" title="$().cropper(&quot;getCroppedCanvas&quot;, { width: 320, height: 180 })">
+              320&times;180
             </span>
           </button>
         </div>
@@ -212,6 +229,16 @@
             </span>
           </button>
         </div>
+        <button class="btn btn-primary" data-method="setData" data-target="#putData" type="button">
+          <span class="docs-tooltip" data-toggle="tooltip" title="$().cropper(&quot;setData&quot;, data)">
+            Set Data
+          </span>
+        </button>
+        <button class="btn btn-primary" data-method="getContainerData" data-option="" data-target="#putData" type="button">
+          <span class="docs-tooltip" data-toggle="tooltip" title="$().cropper(&quot;getContainerData&quot;)">
+            Get Container Data
+          </span>
+        </button>
         <button class="btn btn-primary" data-method="getImageData" data-option="" data-target="#putData" type="button">
           <span class="docs-tooltip" data-toggle="tooltip" title="$().cropper(&quot;getImageData&quot;)">
             Get Image Data
@@ -514,20 +541,21 @@
       <div class="col-sm-6">
         <p>JavaScript:</p>
         <pre class="prettyprint">var $image = $('#cropper-example-2 &gt; img'),
-    canvasData,
-    cropBoxData;
+    cropBoxData,
+    canvasData;
 
 $('#cropper-example-2-modal').on('shown.bs.modal', function () {
   $image.cropper({
     autoCropArea: 0.5,
     built: function () {
-      $image.cropper('setCanvasData', canvasData);
+      // Strict mode: set crop box data first
       $image.cropper('setCropBoxData', cropBoxData);
+      $image.cropper('setCanvasData', canvasData);
     }
   });
 }).on('hidden.bs.modal', function () {
-  canvasData = $image.cropper('getCanvasData');
   cropBoxData = $image.cropper('getCropBoxData');
+  canvasData = $image.cropper('getCanvasData');
   $image.cropper('destroy');
 });</pre>
       </div>
