@@ -42,9 +42,6 @@
     minContainerWidth: 200,
     minContainerHeight: 100,
 
-    // Added options
-    maxZoomLevel: 1,
-
     // Events
     build: null, // Function
     built: null, // Function
